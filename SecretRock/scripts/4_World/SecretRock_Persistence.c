@@ -80,6 +80,41 @@ class SecretRock_Persistence
         }
     }
 
+    static Building FindExisting(string classname, vector pos)
+    {
+        array<Object> nearby = new array<Object>;
+        array<CargoBase> proxy = new array<CargoBase>;
+        g_Game.GetObjectsAtPosition3D(pos, 0.75, nearby, proxy);
+        int i;
+        for (i = 0; i < nearby.Count(); i++)
+        {
+            Object obj = nearby.Get(i);
+            if (!obj)
+                continue;
+            if (obj.GetType() != classname)
+                continue;
+            Building found = Building.Cast(obj);
+            if (found)
+                return found;
+        }
+        return null;
+    }
+
+    static void ApplyDoor(Building b, bool doorOpen)
+    {
+        if (!b)
+            return;
+        if (doorOpen)
+        {
+            if (!b.IsDoorOpen(0))
+                b.OpenDoor(0);
+        }
+        else if (b.IsDoorOpen(0))
+        {
+            b.CloseDoor(0);
+        }
+    }
+
     static void RestoreAll()
     {
         SecretRock_PlacedFile data = Load();
@@ -92,14 +127,20 @@ class SecretRock_Persistence
 
             vector pos = Vector(e.px, e.py, e.pz);
             vector ori = Vector(e.ox, e.oy, e.oz);
+            Building existing = FindExisting(e.classname, pos);
+            if (existing)
+            {
+                ApplyDoor(existing, e.doorOpen);
+                continue;
+            }
+
             Building b = Building.Cast(g_Game.CreateObjectEx(e.classname, pos, ECE_CREATEPHYSICS));
             if (!b)
                 continue;
             b.SetPosition(pos);
             b.SetOrientation(ori);
             b.Update();
-            if (e.doorOpen)
-                b.OpenDoor(0);
+            ApplyDoor(b, e.doorOpen);
         }
     }
 
