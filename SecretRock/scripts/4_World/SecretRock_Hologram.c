@@ -1,6 +1,8 @@
 // Hologram overrides actually shipped (SR-01 — not "three methods only"):
 //   ProjectionBasedOnParent / GetProjectionName / PlaceEntity
-//     kit projects Land_LF_* (PowerGrid GetDeployedClassname = spawn class)
+//     kit projects SecretRock_Holo_* (vanilla hologramMaterial ghost).
+//     Spawn / GetDeployedClassname stays Land_LF_*. Never PlaceEntity the
+//     Holo class (that would ECE_PLACE_ON_SURFACE a painted house).
 //   SetProjectionPosition
 //     terrain snap (sky clip) + Kit B look-push 1 m
 //   GetDefaultOrientation
@@ -10,9 +12,9 @@
 //     terrain-sized rock (IsInTerrain / BBox / angle) and ActionDeployObject
 //     then hides place (ActionCondition needs !IsColliding).
 //   RefreshVisual
-//     no-op on kit projection. Vanilla SetAnimations refreshes "inventory",
-//     GetHiddenSelection falls back to index 0 = whole-mesh zbytek, and
-//     paints wooden_case hologram onto the entire rock.
+//     super on the Holo_* projection only (wooden_case_deployable). Must
+//     not run against Land_LF_* — GetHiddenSelection("inventory") is 0 and
+//     would paint the whole placed mesh.
 modded class Hologram
 {
     protected const float SR_HOLO_GROUND_RAY_UP = 2.0;
@@ -65,7 +67,11 @@ modded class Hologram
             SecretRock_KitBaseDeployable deployKit = SecretRock_KitBaseDeployable.Cast(m_Parent);
             if (deployKit)
             {
-                return deployKit.GetDeployedClassname();
+                string holoClass = deployKit.SecretRock_GetHologramClassname();
+                if (holoClass != "")
+                {
+                    return holoClass;
+                }
             }
         }
 
@@ -79,7 +85,11 @@ modded class Hologram
             SecretRock_KitBaseDeployable deployKit = SecretRock_KitBaseDeployable.Cast(m_Parent);
             if (deployKit)
             {
-                return deployKit.GetDeployedClassname();
+                string holoName = deployKit.SecretRock_GetHologramClassname();
+                if (holoName != "")
+                {
+                    return holoName;
+                }
             }
         }
 
@@ -93,6 +103,9 @@ modded class Hologram
             SecretRock_KitBaseDeployable deployKit = SecretRock_KitBaseDeployable.Cast(m_Parent);
             if (deployKit)
             {
+                // Kit, not the Holo_* projection. Vanilla PlaceEntity for
+                // IsBasebuildingKit already returns the kit; do not
+                // ECE_OBJECT_SWAP / ECE_PLACE_ON_SURFACE the hologram class.
                 return entity_for_placing;
             }
         }
@@ -194,6 +207,9 @@ modded class Hologram
     {
         if (SecretRock_IsKitProjection())
         {
+            // Holo_* proxy: vanilla wooden_case ghost. Do not skip — a
+            // no-op leaves native rock/concrete on the projection.
+            super.RefreshVisual();
             return;
         }
         super.RefreshVisual();
