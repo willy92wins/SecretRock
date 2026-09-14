@@ -94,6 +94,19 @@ modded class Hologram
             {
                 vector depOffset = deployKit.GetDeployPositionOffset();
                 vector depFinal = position + depOffset;
+                float lookPushM = deployKit.SecretRock_GetHologramLookPushMeters();
+                if (lookPushM > 0.0 && m_Player)
+                {
+                    vector look = m_Player.GetDirection();
+                    look[1] = 0;
+                    float lookLen = look.Length();
+                    if (lookLen > 0.001)
+                    {
+                        look = look * (1.0 / lookLen);
+                        vector lookPush = look * lookPushM;
+                        depFinal = depFinal + lookPush;
+                    }
+                }
                 vector snapped = SecretRock_SnapToTerrain(depFinal);
 
                 if (m_Projection)

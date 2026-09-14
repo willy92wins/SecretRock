@@ -22,4 +22,9 @@ class SecretRock_Monolith4Secure_Kit : SecretRock_KitBaseDeployable
     {
         return "SecretRock_Holo_Monolith4Secure";
     }
+
+    override float SecretRock_GetHologramLookPushMeters()
+    {
+        return 1.0;
+    }
 };

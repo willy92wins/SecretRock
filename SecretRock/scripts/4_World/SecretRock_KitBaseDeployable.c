@@ -35,6 +35,11 @@ class SecretRock_KitBaseDeployable : DeployableContainer_Base
         return "0 0 0";
     }
 
+    float SecretRock_GetHologramLookPushMeters()
+    {
+        return 0.0;
+    }
+
     vector GetDeployOrientationOffset()
     {
         return "0 0 0";
