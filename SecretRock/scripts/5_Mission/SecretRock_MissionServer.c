@@ -15,5 +15,9 @@ modded class MissionServer
     void SecretRock_RestorePlaced()
     {
         SecretRock_Persistence.RestoreAll();
+        if (SecretRock_Persistence.ConsumeRestoreRetry())
+        {
+            GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(SecretRock_RestorePlaced, 4000, false);
+        }
     }
 };
