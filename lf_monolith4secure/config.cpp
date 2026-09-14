@@ -17,11 +17,6 @@ class CfgVehicles
         displayName = "Refugio Monolith 4 La Frontera";
         model = "lf_monolith4secure\data\lf_monolith4secure.p3d";
         autocenter = 0;
-        hiddenSelections[] = {"zbytek"};
-        hiddenSelectionsTextures[] = {"lf_monolith4secure\\data\\concrete_co.paa"};
-        hiddenSelectionsMaterials[] = {"lf_monolith4secure\\data\\concrete.rvmat"};
-        hologramMaterial = "wooden_case";
-        hologramMaterialPath = "dz\\gear\\camping\\data";
         class Doors
         {
             class Door1

@@ -1,53 +1,11 @@
 class SecretRock_PlacedRock : House
 {
+    // Land_LF_* visual faces are one p3d selection named zbytek.
+    // Never SetObjectTexture / SetObjectMaterial on that selection: it
+    // replaces native rock_monolith + concrete materials with a single
+    // slot (and House ignores the restore anyway).
     static void RestoreEntity(EntityAI ent)
     {
-        if (!ent)
-        {
-            return;
-        }
-
-        int idx = ent.GetHiddenSelectionIndex("zbytek");
-        if (idx < 0)
-        {
-            idx = 0;
-        }
-
-        string t = ent.GetType();
-        string placedTex;
-        string placedMat;
-        if (t == "Land_LF_VanillaMonolith2")
-        {
-            placedTex = "lf_vanilla_monolith2\\data\\concrete_co.paa";
-            placedMat = "lf_vanilla_monolith2\\data\\concrete.rvmat";
-        }
-        else if (t == "Land_LF_Monolith4Secure")
-        {
-            placedTex = "lf_monolith4secure\\data\\concrete_co.paa";
-            placedMat = "lf_monolith4secure\\data\\concrete.rvmat";
-        }
-        else
-        {
-            TStringArray tex = ent.GetHiddenSelectionsTextures();
-            TStringArray mats = ent.GetHiddenSelectionsMaterials();
-            if (tex && idx < tex.Count())
-            {
-                placedTex = tex.Get(idx);
-            }
-            if (mats && idx < mats.Count())
-            {
-                placedMat = mats.Get(idx);
-            }
-        }
-
-        if (placedTex != "")
-        {
-            ent.SetObjectTexture(idx, placedTex);
-        }
-        if (placedMat != "")
-        {
-            ent.SetObjectMaterial(idx, placedMat);
-        }
     }
 
     static void RestoreNearby(string classname, vector pos)
@@ -75,17 +33,6 @@ class SecretRock_PlacedRock : House
             EntityAI ent = EntityAI.Cast(obj);
             RestoreEntity(ent);
         }
-    }
-
-    void SecretRock_RestorePlacedVisuals()
-    {
-        RestoreEntity(this);
-    }
-
-    override void EEInit()
-    {
-        super.EEInit();
-        SecretRock_RestorePlacedVisuals();
     }
 };
 

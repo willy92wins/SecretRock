@@ -81,6 +81,7 @@ class CfgVehicles
         canBeDigged = 0;
         carveNavmesh = 1;
         physLayer = "item_small";
+        projectionTypename = "SecretRock_Holo_VanillaMonolith2";
         hiddenSelections[] = {"zbytek"};
         hiddenSelectionsTextures[] = {""};
         hiddenSelectionsMaterials[] = {""};
@@ -98,6 +99,7 @@ class CfgVehicles
         canBeDigged = 0;
         carveNavmesh = 1;
         physLayer = "item_small";
+        projectionTypename = "SecretRock_Holo_Monolith4Secure";
         hiddenSelections[] = {"zbytek"};
         hiddenSelectionsTextures[] = {""};
         hiddenSelectionsMaterials[] = {""};
