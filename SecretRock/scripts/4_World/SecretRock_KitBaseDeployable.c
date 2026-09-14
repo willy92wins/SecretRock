@@ -22,11 +22,6 @@ class SecretRock_KitBaseDeployable : DeployableContainer_Base
 
     string GetDeployedClassname()
     {
-        string holoClass = SecretRock_GetHologramClassname();
-        if (holoClass != "")
-        {
-            return holoClass;
-        }
         return SecretRock_GetSpawnClassname();
     }
 
@@ -100,6 +95,27 @@ class SecretRock_KitBaseDeployable : DeployableContainer_Base
         SecretRock_PlacedRock.RestoreNearby(classname, pos);
     }
 
+    void SecretRock_DeleteLeftoverHolograms(vector pos)
+    {
+        array<Object> nearby = new array<Object>;
+        array<CargoBase> proxy = new array<CargoBase>;
+        g_Game.GetObjectsAtPosition3D(pos, 2.0, nearby, proxy);
+        int i;
+        for (i = 0; i < nearby.Count(); i++)
+        {
+            Object obj = nearby.Get(i);
+            if (!obj)
+            {
+                continue;
+            }
+            string t = obj.GetType();
+            if (t == "SecretRock_Holo_VanillaMonolith2" || t == "SecretRock_Holo_Monolith4Secure")
+            {
+                g_Game.ObjectDelete(obj);
+            }
+        }
+    }
+
     override void OnPlacementComplete(Man player, vector position = "0 0 0", vector orientation = "0 0 0")
     {
         super.OnPlacementComplete(player, position, orientation);
@@ -115,6 +131,7 @@ class SecretRock_KitBaseDeployable : DeployableContainer_Base
         GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(SecretRock_RestoreNearbyDeferred, 300, false, spawnClass, position);
 
         #ifdef SERVER
+        SecretRock_DeleteLeftoverHolograms(position);
         EntityAI placed = EntityAI.Cast(g_Game.CreateObjectEx(spawnClass, position, ECE_CREATEPHYSICS));
         if (placed)
         {

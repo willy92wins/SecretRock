@@ -1,6 +1,6 @@
 // Hologram overrides actually shipped (SR-01 — not "three methods only"):
 //   ProjectionBasedOnParent / GetProjectionName / PlaceEntity
-//     different-model trio (kit projects Holo_*, spawn is still Land_LF_*)
+//     kit projects Land_LF_* (PowerGrid GetDeployedClassname = spawn class)
 //   SetProjectionPosition
 //     terrain snap (sky clip) + Kit B look-push 1 m
 //   GetDefaultOrientation
@@ -10,7 +10,9 @@
 //     terrain-sized rock (IsInTerrain / BBox / angle) and ActionDeployObject
 //     then hides place (ActionCondition needs !IsColliding).
 //   RefreshVisual
-//     zbytek tint on the Holo_* projection only
+//     no-op on kit projection. Vanilla SetAnimations refreshes "inventory",
+//     GetHiddenSelection falls back to index 0 = whole-mesh zbytek, and
+//     paints wooden_case hologram onto the entire rock.
 modded class Hologram
 {
     protected const float SR_HOLO_GROUND_RAY_UP = 2.0;
@@ -192,7 +194,7 @@ modded class Hologram
     {
         if (SecretRock_IsKitProjection())
         {
-            SetSelectionToRefresh("zbytek");
+            return;
         }
         super.RefreshVisual();
     }

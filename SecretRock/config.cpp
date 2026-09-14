@@ -50,11 +50,6 @@ class CfgVehicles
         displayName = "This is a hologram";
         model = "lf_vanilla_monolith2\data\lf_vanilla_monolith2.p3d";
         autocenter = 0;
-        hiddenSelections[] = {"zbytek"};
-        hiddenSelectionsTextures[] = {""};
-        hiddenSelectionsMaterials[] = {""};
-        hologramMaterial = "wooden_case";
-        hologramMaterialPath = "dz\\gear\\camping\\data";
     };
     class SecretRock_Holo_Monolith4Secure : HouseNoDestruct
     {
@@ -62,11 +57,6 @@ class CfgVehicles
         displayName = "This is a hologram";
         model = "lf_monolith4secure\data\lf_monolith4secure.p3d";
         autocenter = 0;
-        hiddenSelections[] = {"zbytek"};
-        hiddenSelectionsTextures[] = {""};
-        hiddenSelectionsMaterials[] = {""};
-        hologramMaterial = "wooden_case";
-        hologramMaterialPath = "dz\\gear\\camping\\data";
     };
     class SecretRock_VanillaMonolith2_Kit : Inventory_Base
     {
@@ -81,10 +71,6 @@ class CfgVehicles
         canBeDigged = 0;
         carveNavmesh = 1;
         physLayer = "item_small";
-        projectionTypename = "SecretRock_Holo_VanillaMonolith2";
-        hiddenSelections[] = {"zbytek"};
-        hiddenSelectionsTextures[] = {""};
-        hiddenSelectionsMaterials[] = {""};
     };
     class SecretRock_Monolith4Secure_Kit : Inventory_Base
     {
@@ -99,9 +85,5 @@ class CfgVehicles
         canBeDigged = 0;
         carveNavmesh = 1;
         physLayer = "item_small";
-        projectionTypename = "SecretRock_Holo_Monolith4Secure";
-        hiddenSelections[] = {"zbytek"};
-        hiddenSelectionsTextures[] = {""};
-        hiddenSelectionsMaterials[] = {""};
     };
 };
