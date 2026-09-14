@@ -56,6 +56,9 @@ class CfgVehicles
         canBeDigged = 0;
         carveNavmesh = 1;
         physLayer = "item_small";
+        hiddenSelections[] = {"zbytek"};
+        hiddenSelectionsTextures[] = {""};
+        hiddenSelectionsMaterials[] = {""};
     };
     class SecretRock_Monolith4Secure_Kit : Inventory_Base
     {
@@ -70,5 +73,8 @@ class CfgVehicles
         canBeDigged = 0;
         carveNavmesh = 1;
         physLayer = "item_small";
+        hiddenSelections[] = {"zbytek"};
+        hiddenSelectionsTextures[] = {""};
+        hiddenSelectionsMaterials[] = {""};
     };
 };

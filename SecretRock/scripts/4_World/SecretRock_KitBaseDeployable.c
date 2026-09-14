@@ -63,8 +63,16 @@ class SecretRock_KitBaseDeployable : DeployableContainer_Base
     override void SetActions()
     {
         super.SetActions();
+        RemoveAction(ActionPlaceObject);
         AddAction(ActionTogglePlaceObject);
         AddAction(SecretRock_ActionPlaceGeneric);
+    }
+
+    override void OnPlacementCancelled(Man player)
+    {
+        super.OnPlacementCancelled(player);
+        SetTakeable(true);
+        SetIsBeingPlaced(false);
     }
 
     override void OnPlacementComplete(Man player, vector position = "0 0 0", vector orientation = "0 0 0")

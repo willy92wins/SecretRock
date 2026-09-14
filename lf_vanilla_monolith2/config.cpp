@@ -17,6 +17,11 @@ class CfgVehicles
         displayName = "Refugio vanilla Monolith 2";
         model = "lf_vanilla_monolith2\data\lf_vanilla_monolith2.p3d";
         autocenter = 0;
+        hiddenSelections[] = {"zbytek"};
+        hiddenSelectionsTextures[] = {"lf_vanilla_monolith2\\data\\concrete_co.paa"};
+        hiddenSelectionsMaterials[] = {"lf_vanilla_monolith2\\data\\concrete.rvmat"};
+        hologramMaterial = "wooden_case";
+        hologramMaterialPath = "dz\\gear\\camping\\data";
         class Doors
         {
             class Door1

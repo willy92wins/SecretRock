@@ -1,9 +1,23 @@
+class SecretRock_ActionPlaceGenericCB : ActionPlaceObjectCB
+{
+    override void CreateActionComponent()
+    {
+        m_ActionData.m_ActionComponent = new CAContinuousTime(UATimeSpent.DEFAULT);
+    }
+};
+
 class SecretRock_ActionPlaceGeneric : ActionPlaceObject
 {
     void SecretRock_ActionPlaceGeneric()
     {
+        m_CallbackClass = SecretRock_ActionPlaceGenericCB;
         m_StanceMask = DayZPlayerConstants.STANCEMASK_ERECT | DayZPlayerConstants.STANCEMASK_CROUCH;
         m_FullBody = true;
+    }
+
+    override bool HasProgress()
+    {
+        return true;
     }
 
     override void SetupAnimation(ItemBase item)
@@ -34,6 +48,24 @@ class SecretRock_ActionPlaceGeneric : ActionPlaceObject
         return DayZPlayerConstants.STANCEMASK_ERECT | DayZPlayerConstants.STANCEMASK_CROUCH;
     }
 
+    override void OnEndClient(ActionData action_data)
+    {
+        super.OnEndClient(action_data);
+
+        PlaceObjectActionData poActionData = PlaceObjectActionData.Cast(action_data);
+        if (!poActionData || !poActionData.m_MainItem || !poActionData.m_Player)
+            return;
+
+        if (poActionData.m_AlreadyPlaced)
+            return;
+
+        EntityAI inHands = poActionData.m_Player.GetEntityInHands();
+        if (inHands != poActionData.m_MainItem)
+        {
+            poActionData.m_Player.PredictiveTakeEntityToHands(poActionData.m_MainItem);
+        }
+    }
+
     override void OnEndServer(ActionData action_data)
     {
         if (action_data.m_Player)
@@ -46,6 +78,7 @@ class SecretRock_ActionPlaceGeneric : ActionPlaceObject
         if (!poActionData.m_AlreadyPlaced)
         {
             poActionData.m_MainItem.SetIsBeingPlaced(false);
+            poActionData.m_MainItem.SetTakeable(true);
 
             if (g_Game.IsMultiplayer())
             {
