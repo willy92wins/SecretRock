@@ -1,0 +1,7 @@
+*.pbo
+*.bisign
+*.biprivatekey
+*.bak
+*.tmp
+Thumbs.db
+desktop.ini

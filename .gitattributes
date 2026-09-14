@@ -1,0 +1,9 @@
+* text=auto eol=lf
+*.p3d binary
+*.paa binary
+config.cpp text eol=lf
+*.rvmat text eol=lf
+*.cfg text eol=lf
+include.lst text eol=lf
+mod.cpp text eol=lf
+$PBOPREFIX$ text eol=lf
