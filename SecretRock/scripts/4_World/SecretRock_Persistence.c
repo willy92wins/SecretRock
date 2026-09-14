@@ -130,6 +130,7 @@ class SecretRock_Persistence
             Building existing = FindExisting(e.classname, pos);
             if (existing)
             {
+                SecretRock_PlacedRock.RestoreEntity(existing);
                 ApplyDoor(existing, e.doorOpen);
                 continue;
             }
@@ -140,6 +141,7 @@ class SecretRock_Persistence
             b.SetPosition(pos);
             b.SetOrientation(ori);
             b.Update();
+            SecretRock_PlacedRock.RestoreEntity(b);
             ApplyDoor(b, e.doorOpen);
         }
     }

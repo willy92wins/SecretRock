@@ -5,6 +5,11 @@ class SecretRock_KitBaseDeployable : DeployableContainer_Base
         g_Game.ObjectDelete(this);
     }
 
+    void SecretRock_RestorePlacedDeferred(EntityAI placed)
+    {
+        SecretRock_PlacedRock.RestoreEntity(placed);
+    }
+
     string SecretRock_GetSpawnClassname()
     {
         return "";
@@ -93,6 +98,8 @@ class SecretRock_KitBaseDeployable : DeployableContainer_Base
             placed.SetPosition(position);
             placed.SetOrientation(orientation);
             placed.Update();
+            SecretRock_PlacedRock.RestoreEntity(placed);
+            GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(SecretRock_RestorePlacedDeferred, 250, false, placed);
             SecretRock_Persistence.RegisterPlaced(placed);
             GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(SecretRock_DeferredDelete, 500, false);
         }

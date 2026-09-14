@@ -166,6 +166,10 @@ modded class Hologram
     {
         if (SecretRock_IsKitProjection())
         {
+            if (g_Game.IsDedicatedServer())
+            {
+                return;
+            }
             SetSelectionToRefresh("zbytek");
         }
         super.RefreshVisual();
