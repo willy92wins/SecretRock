@@ -1,4 +1,4 @@
-modded class Building
+modded class BuildingBase
 {
     override void OnDoorOpenFinish(DoorFinishParams params)
     {
