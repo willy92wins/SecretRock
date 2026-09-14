@@ -5,9 +5,10 @@
 //     terrain snap (sky clip) + Kit B look-push 1 m
 //   GetDefaultOrientation
 //     kit orientation offset (0 on both rocks)
-//   IsFloating
-//     only collision bypass kept: vanilla IsFloating made the hologram
-//     sit in the sky and blocked place. EvaluateCollision is vanilla.
+//   IsColliding / EvaluateCollision / IsCollidingAngle / IsFloating
+//     PowerGrid kit flags. Vanilla EvaluateCollision sets colliding on a
+//     terrain-sized rock (IsInTerrain / BBox / angle) and ActionDeployObject
+//     then hides place (ActionCondition needs !IsColliding).
 //   RefreshVisual
 //     zbytek tint on the Holo_* projection only
 modded class Hologram
@@ -147,6 +148,35 @@ modded class Hologram
         }
 
         return super.GetDefaultOrientation();
+    }
+
+    override bool IsColliding()
+    {
+        if (SecretRock_IsKitProjection())
+        {
+            return false;
+        }
+        return super.IsColliding();
+    }
+
+    override void EvaluateCollision(ItemBase action_item)
+    {
+        if (SecretRock_IsKitProjection())
+        {
+            bool bNoCollide = false;
+            SetIsColliding(bNoCollide);
+            return;
+        }
+        super.EvaluateCollision(action_item);
+    }
+
+    override bool IsCollidingAngle()
+    {
+        if (SecretRock_IsKitProjection())
+        {
+            return false;
+        }
+        return super.IsCollidingAngle();
     }
 
     override bool IsFloating()
