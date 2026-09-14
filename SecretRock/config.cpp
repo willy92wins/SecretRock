@@ -2,7 +2,7 @@ class CfgPatches
 {
     class SecretRock
     {
-        units[] = {"SecretRock_VanillaMonolith2_Kit", "SecretRock_Monolith4Secure_Kit"};
+        units[] = {"SecretRock_VanillaMonolith2_Kit", "SecretRock_Monolith4Secure_Kit", "SecretRock_Holo_VanillaMonolith2", "SecretRock_Holo_Monolith4Secure"};
         weapons[] = {};
         requiredVersion = 0.1;
         requiredAddons[] = {"DZ_Data", "DZ_Scripts", "lf_vanilla_monolith2", "lf_monolith4secure"};
@@ -43,6 +43,31 @@ class CfgMods
 class CfgVehicles
 {
     class Inventory_Base;
+    class HouseNoDestruct;
+    class SecretRock_Holo_VanillaMonolith2 : HouseNoDestruct
+    {
+        scope = 2;
+        displayName = "";
+        model = "lf_vanilla_monolith2\data\lf_vanilla_monolith2.p3d";
+        autocenter = 0;
+        hiddenSelections[] = {"zbytek"};
+        hiddenSelectionsTextures[] = {""};
+        hiddenSelectionsMaterials[] = {""};
+        hologramMaterial = "wooden_case";
+        hologramMaterialPath = "dz\\gear\\camping\\data";
+    };
+    class SecretRock_Holo_Monolith4Secure : HouseNoDestruct
+    {
+        scope = 2;
+        displayName = "";
+        model = "lf_monolith4secure\data\lf_monolith4secure.p3d";
+        autocenter = 0;
+        hiddenSelections[] = {"zbytek"};
+        hiddenSelectionsTextures[] = {""};
+        hiddenSelectionsMaterials[] = {""};
+        hologramMaterial = "wooden_case";
+        hologramMaterialPath = "dz\\gear\\camping\\data";
+    };
     class SecretRock_VanillaMonolith2_Kit : Inventory_Base
     {
         scope = 2;

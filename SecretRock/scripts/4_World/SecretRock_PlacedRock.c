@@ -10,21 +10,36 @@ class SecretRock_PlacedRock : House
         int idx = ent.GetHiddenSelectionIndex("zbytek");
         if (idx < 0)
         {
-            return;
+            idx = 0;
         }
 
-        TStringArray tex = ent.GetHiddenSelectionsTextures();
-        TStringArray mats = ent.GetHiddenSelectionsMaterials();
+        string t = ent.GetType();
         string placedTex;
         string placedMat;
-        if (tex && idx < tex.Count())
+        if (t == "Land_LF_VanillaMonolith2")
         {
-            placedTex = tex.Get(idx);
+            placedTex = "lf_vanilla_monolith2\\data\\concrete_co.paa";
+            placedMat = "lf_vanilla_monolith2\\data\\concrete.rvmat";
         }
-        if (mats && idx < mats.Count())
+        else if (t == "Land_LF_Monolith4Secure")
         {
-            placedMat = mats.Get(idx);
+            placedTex = "lf_monolith4secure\\data\\concrete_co.paa";
+            placedMat = "lf_monolith4secure\\data\\concrete.rvmat";
         }
+        else
+        {
+            TStringArray tex = ent.GetHiddenSelectionsTextures();
+            TStringArray mats = ent.GetHiddenSelectionsMaterials();
+            if (tex && idx < tex.Count())
+            {
+                placedTex = tex.Get(idx);
+            }
+            if (mats && idx < mats.Count())
+            {
+                placedMat = mats.Get(idx);
+            }
+        }
+
         if (placedTex != "")
         {
             ent.SetObjectTexture(idx, placedTex);
@@ -32,6 +47,33 @@ class SecretRock_PlacedRock : House
         if (placedMat != "")
         {
             ent.SetObjectMaterial(idx, placedMat);
+        }
+    }
+
+    static void RestoreNearby(string classname, vector pos)
+    {
+        if (classname == "")
+        {
+            return;
+        }
+
+        array<Object> nearby = new array<Object>;
+        array<CargoBase> proxy = new array<CargoBase>;
+        g_Game.GetObjectsAtPosition3D(pos, 1.5, nearby, proxy);
+        int i;
+        for (i = 0; i < nearby.Count(); i++)
+        {
+            Object obj = nearby.Get(i);
+            if (!obj)
+            {
+                continue;
+            }
+            if (obj.GetType() != classname)
+            {
+                continue;
+            }
+            EntityAI ent = EntityAI.Cast(obj);
+            RestoreEntity(ent);
         }
     }
 

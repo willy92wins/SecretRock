@@ -15,8 +15,18 @@ class SecretRock_KitBaseDeployable : DeployableContainer_Base
         return "";
     }
 
+    string SecretRock_GetHologramClassname()
+    {
+        return "";
+    }
+
     string GetDeployedClassname()
     {
+        string holoClass = SecretRock_GetHologramClassname();
+        if (holoClass != "")
+        {
+            return holoClass;
+        }
         return SecretRock_GetSpawnClassname();
     }
 
@@ -80,11 +90,15 @@ class SecretRock_KitBaseDeployable : DeployableContainer_Base
         SetIsBeingPlaced(false);
     }
 
+    void SecretRock_RestoreNearbyDeferred(string classname, vector pos)
+    {
+        SecretRock_PlacedRock.RestoreNearby(classname, pos);
+    }
+
     override void OnPlacementComplete(Man player, vector position = "0 0 0", vector orientation = "0 0 0")
     {
         super.OnPlacementComplete(player, position, orientation);
 
-        #ifdef SERVER
         string spawnClass = SecretRock_GetSpawnClassname();
         if (spawnClass == "")
         {
@@ -92,6 +106,10 @@ class SecretRock_KitBaseDeployable : DeployableContainer_Base
             return;
         }
 
+        SecretRock_PlacedRock.RestoreNearby(spawnClass, position);
+        GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(SecretRock_RestoreNearbyDeferred, 300, false, spawnClass, position);
+
+        #ifdef SERVER
         EntityAI placed = EntityAI.Cast(g_Game.CreateObjectEx(spawnClass, position, ECE_CREATEPHYSICS));
         if (placed)
         {
