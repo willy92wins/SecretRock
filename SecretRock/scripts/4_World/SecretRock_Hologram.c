@@ -1,3 +1,15 @@
+// Hologram overrides actually shipped (SR-01 — not "three methods only"):
+//   ProjectionBasedOnParent / GetProjectionName / PlaceEntity
+//     different-model trio (kit projects Holo_*, spawn is still Land_LF_*)
+//   SetProjectionPosition
+//     terrain snap (sky clip) + Kit B look-push 1 m
+//   GetDefaultOrientation
+//     kit orientation offset (0 on both rocks)
+//   IsFloating
+//     only collision bypass kept: vanilla IsFloating made the hologram
+//     sit in the sky and blocked place. EvaluateCollision is vanilla.
+//   RefreshVisual
+//     zbytek tint on the Holo_* projection only
 modded class Hologram
 {
     protected const float SR_HOLO_GROUND_RAY_UP = 2.0;
@@ -135,35 +147,6 @@ modded class Hologram
         }
 
         return super.GetDefaultOrientation();
-    }
-
-    override bool IsColliding()
-    {
-        if (SecretRock_IsKitProjection())
-        {
-            return false;
-        }
-        return super.IsColliding();
-    }
-
-    override void EvaluateCollision(ItemBase action_item)
-    {
-        if (SecretRock_IsKitProjection())
-        {
-            bool bNoCollide = false;
-            SetIsColliding(bNoCollide);
-            return;
-        }
-        super.EvaluateCollision(action_item);
-    }
-
-    override bool IsCollidingAngle()
-    {
-        if (SecretRock_IsKitProjection())
-        {
-            return false;
-        }
-        return super.IsCollidingAngle();
     }
 
     override bool IsFloating()

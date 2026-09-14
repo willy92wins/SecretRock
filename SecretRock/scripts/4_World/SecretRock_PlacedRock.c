@@ -1,5 +1,7 @@
 class SecretRock_PlacedRock : House
 {
+    string m_SecretRockPersistId;
+
     // Land_LF_* visual faces are one p3d selection named zbytek.
     // Never SetObjectTexture / SetObjectMaterial on that selection: it
     // replaces native rock_monolith + concrete materials with a single
@@ -33,6 +35,14 @@ class SecretRock_PlacedRock : House
             EntityAI ent = EntityAI.Cast(obj);
             RestoreEntity(ent);
         }
+    }
+
+    override void EEDelete(EntityAI parent)
+    {
+        super.EEDelete(parent);
+        #ifdef SERVER
+        SecretRock_Persistence.UnregisterEntity(this);
+        #endif
     }
 };
 

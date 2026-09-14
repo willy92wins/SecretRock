@@ -2,7 +2,7 @@ class CfgPatches
 {
     class SecretRock
     {
-        units[] = {"SecretRock_VanillaMonolith2_Kit", "SecretRock_Monolith4Secure_Kit", "SecretRock_Holo_VanillaMonolith2", "SecretRock_Holo_Monolith4Secure"};
+        units[] = {"SecretRock_VanillaMonolith2_Kit", "SecretRock_Monolith4Secure_Kit"};
         weapons[] = {};
         requiredVersion = 0.1;
         requiredAddons[] = {"DZ_Data", "DZ_Scripts", "lf_vanilla_monolith2", "lf_monolith4secure"};
@@ -46,8 +46,8 @@ class CfgVehicles
     class HouseNoDestruct;
     class SecretRock_Holo_VanillaMonolith2 : HouseNoDestruct
     {
-        scope = 2;
-        displayName = "";
+        scope = 1;
+        displayName = "This is a hologram";
         model = "lf_vanilla_monolith2\data\lf_vanilla_monolith2.p3d";
         autocenter = 0;
         hiddenSelections[] = {"zbytek"};
@@ -58,8 +58,8 @@ class CfgVehicles
     };
     class SecretRock_Holo_Monolith4Secure : HouseNoDestruct
     {
-        scope = 2;
-        displayName = "";
+        scope = 1;
+        displayName = "This is a hologram";
         model = "lf_monolith4secure\data\lf_monolith4secure.p3d";
         autocenter = 0;
         hiddenSelections[] = {"zbytek"};
