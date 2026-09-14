@@ -52,6 +52,9 @@ class CfgVehicles
         autocenter = 0;
         hologramMaterial = "wooden_case";
         hologramMaterialPath = "dz\gear\camping\data";
+        hiddenSelections[] = {"placing"};
+        hiddenSelectionsTextures[] = {""};
+        hiddenSelectionsMaterials[] = {""};
     };
     class SecretRock_Holo_Monolith4Secure : HouseNoDestruct
     {
@@ -61,6 +64,9 @@ class CfgVehicles
         autocenter = 0;
         hologramMaterial = "wooden_case";
         hologramMaterialPath = "dz\gear\camping\data";
+        hiddenSelections[] = {"placing"};
+        hiddenSelectionsTextures[] = {""};
+        hiddenSelectionsMaterials[] = {""};
     };
     class SecretRock_VanillaMonolith2_Kit : Inventory_Base
     {

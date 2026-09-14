@@ -12,9 +12,9 @@
 //     terrain-sized rock (IsInTerrain / BBox / angle) and ActionDeployObject
 //     then hides place (ActionCondition needs !IsColliding).
 //   RefreshVisual
-//     super on the Holo_* projection only (wooden_case_deployable). Must
-//     not run against Land_LF_* — GetHiddenSelection("inventory") is 0 and
-//     would paint the whole placed mesh.
+//     super on the Holo_* projection only (wooden_case_deployable).
+//     Holo hiddenSelections[] = {"placing"} (p3d selection, not zbytek).
+//     Land_LF_* configs have no hiddenSelections — do not paint placed.
 modded class Hologram
 {
     protected const float SR_HOLO_GROUND_RAY_UP = 2.0;
