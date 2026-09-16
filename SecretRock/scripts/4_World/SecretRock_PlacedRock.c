@@ -2,10 +2,57 @@ class SecretRock_PlacedRock : House
 {
     string m_SecretRockPersistId;
 
-    // Land_LF_* visual faces are one p3d selection named zbytek.
-    // Never SetObjectTexture / SetObjectMaterial on that selection: it
-    // replaces native rock_monolith + concrete materials with a single
-    // slot (and House ignores the restore anyway).
+    // Land_LF_* keep native face materials. Never SetObjectTexture /
+    // SetObjectMaterial on a whole-mesh selection (do not add zbytek).
+    static bool SecretRock_TargetHasSelection(ActionTarget target, string want)
+    {
+        if (!target || want == "")
+        {
+            return false;
+        }
+
+        Object obj = target.GetObject();
+        if (!obj)
+        {
+            return false;
+        }
+
+        TStringArray names = new TStringArray;
+        obj.GetActionComponentNameList(target.GetComponentIndex(), names);
+        int i;
+        for (i = 0; i < names.Count(); i++)
+        {
+            if (names.Get(i) == want)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    // Open looks at the sliding leaf. Close looks at the static panel
+    // (door1 faces that are not door1_leaf; tagged door1_panel).
+    static bool SecretRock_IsOpenTarget(ActionTarget target)
+    {
+        return SecretRock_TargetHasSelection(target, "door1_leaf");
+    }
+
+    static bool SecretRock_IsCloseTarget(ActionTarget target)
+    {
+        if (SecretRock_TargetHasSelection(target, "door1_panel"))
+        {
+            return true;
+        }
+
+        if (SecretRock_TargetHasSelection(target, "door1") && !SecretRock_TargetHasSelection(target, "door1_leaf"))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
     static void RestoreEntity(EntityAI ent)
     {
     }
