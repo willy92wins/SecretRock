@@ -1,3 +1,21 @@
+class SecretRock_VanillaMonolith1_Kit : SecretRock_KitBaseDeployable
+{
+    override string SecretRock_GetSpawnClassname()
+    {
+        return "Land_LF_VanillaMonolith1";
+    }
+
+    override string SecretRock_GetHologramClassname()
+    {
+        return "SecretRock_Holo_VanillaMonolith1";
+    }
+
+    override float SecretRock_GetHologramLookPushMeters()
+    {
+        return 1.0;
+    }
+};
+
 class SecretRock_VanillaMonolith2_Kit : SecretRock_KitBaseDeployable
 {
     override string SecretRock_GetSpawnClassname()

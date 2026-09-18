@@ -31,11 +31,21 @@ class SecretRock_PlacedRock : House
         return false;
     }
 
-    // Open looks at the sliding leaf. Close looks at the static panel
-    // (door1 faces that are not door1_leaf; tagged door1_panel).
+    // Open: sliding leaf, or the static cubes/panel beside the door.
+    // Close: static panel/cubes (door1 faces that are not door1_leaf).
     static bool SecretRock_IsOpenTarget(ActionTarget target)
     {
-        return SecretRock_TargetHasSelection(target, "door1_leaf");
+        if (SecretRock_TargetHasSelection(target, "door1_leaf"))
+        {
+            return true;
+        }
+
+        if (SecretRock_TargetHasSelection(target, "door1_panel"))
+        {
+            return true;
+        }
+
+        return false;
     }
 
     static bool SecretRock_IsCloseTarget(ActionTarget target)
@@ -91,6 +101,10 @@ class SecretRock_PlacedRock : House
         SecretRock_Persistence.UnregisterEntity(this);
         #endif
     }
+};
+
+class Land_LF_VanillaMonolith1 : SecretRock_PlacedRock
+{
 };
 
 class Land_LF_VanillaMonolith2 : SecretRock_PlacedRock

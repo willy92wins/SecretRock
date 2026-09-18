@@ -7,3 +7,4 @@ config.cpp text eol=lf
 include.lst text eol=lf
 mod.cpp text eol=lf
 $PBOPREFIX$ text eol=lf
+lf_vanilla_monolith1/data/lf_vanilla_monolith1.p3d filter=lfs diff=lfs merge=lfs -text

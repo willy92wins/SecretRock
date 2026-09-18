@@ -52,7 +52,7 @@ class SecretRock_Persistence
 
     static bool IsOurRockType(string t)
     {
-        return t == "Land_LF_VanillaMonolith2" || t == "Land_LF_Monolith4Secure";
+        return t == "Land_LF_VanillaMonolith1" || t == "Land_LF_VanillaMonolith2" || t == "Land_LF_Monolith4Secure";
     }
 
     static bool IsOurRock(Object obj)

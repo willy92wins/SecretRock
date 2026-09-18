@@ -2,10 +2,10 @@ class CfgPatches
 {
     class SecretRock
     {
-        units[] = {"SecretRock_VanillaMonolith2_Kit", "SecretRock_Monolith4Secure_Kit"};
+        units[] = {"SecretRock_VanillaMonolith2_Kit", "SecretRock_Monolith4Secure_Kit", "SecretRock_VanillaMonolith1_Kit"};
         weapons[] = {};
         requiredVersion = 0.1;
-        requiredAddons[] = {"DZ_Data", "DZ_Scripts", "lf_vanilla_monolith2", "lf_monolith4secure"};
+        requiredAddons[] = {"DZ_Data", "DZ_Scripts", "lf_vanilla_monolith2", "lf_monolith4secure", "lf_vanilla_monolith1"};
     };
 };
 
@@ -44,6 +44,18 @@ class CfgVehicles
 {
     class Inventory_Base;
     class HouseNoDestruct;
+    class SecretRock_Holo_VanillaMonolith1 : HouseNoDestruct
+    {
+        scope = 1;
+        displayName = "This is a hologram";
+        model = "lf_vanilla_monolith1\data\lf_vanilla_monolith1.p3d";
+        autocenter = 0;
+        hologramMaterial = "wooden_case";
+        hologramMaterialPath = "dz\gear\camping\data";
+        hiddenSelections[] = {"placing"};
+        hiddenSelectionsTextures[] = {""};
+        hiddenSelectionsMaterials[] = {""};
+    };
     class SecretRock_Holo_VanillaMonolith2 : HouseNoDestruct
     {
         scope = 1;
@@ -67,6 +79,21 @@ class CfgVehicles
         hiddenSelections[] = {"placing"};
         hiddenSelectionsTextures[] = {""};
         hiddenSelectionsMaterials[] = {""};
+    };
+    class SecretRock_VanillaMonolith1_Kit : Inventory_Base
+    {
+        scope = 2;
+        displayName = "Monolith 1 kit";
+        descriptionShort = "Places the vanilla monolith 1 shelter. Spawn only.";
+        model = "\SecretRock\data\kits\lf_kit_box.p3d";
+        weight = 5000;
+        itemSize[] = {5, 3};
+        rotationFlags = 2;
+        itemBehaviour = 2;
+        canBeDigged = 0;
+        carveNavmesh = 1;
+        physLayer = "item_small";
+        projectionTypename = "SecretRock_Holo_VanillaMonolith1";
     };
     class SecretRock_VanillaMonolith2_Kit : Inventory_Base
     {

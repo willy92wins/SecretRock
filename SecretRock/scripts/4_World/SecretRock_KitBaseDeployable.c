@@ -109,7 +109,7 @@ class SecretRock_KitBaseDeployable : DeployableContainer_Base
                 continue;
             }
             string t = obj.GetType();
-            if (t == "SecretRock_Holo_VanillaMonolith2" || t == "SecretRock_Holo_Monolith4Secure")
+            if (t == "SecretRock_Holo_VanillaMonolith1" || t == "SecretRock_Holo_VanillaMonolith2" || t == "SecretRock_Holo_Monolith4Secure")
             {
                 g_Game.ObjectDelete(obj);
             }
